@@ -18,29 +18,30 @@ class OrderRepository implements OrderRepositoryInterface
         $subtotal = $this->calculateSubTotal($request, $catalogItems);
         $taxes = round($subtotal * (14 / 100), 2);
 
-        $checkoutOutput['Subtotal'] = priceForBillType($request->billType, $subtotal);
-        $checkoutOutput['Taxes'] = priceForBillType($request->billType, $taxes);
+        $checkoutOutput['Subtotal'] = priceForBillType($request->billCurrency, $subtotal);
+        $checkoutOutput['Taxes'] = priceForBillType($request->billCurrency, $taxes);
 
+        // the original total before discount if exists
         $total = $subtotal;
 
-        //check for offers
+        //check for available offers now
         if (($request->Shoes > 0) || ($request['T-shirt'] > 1 && $request->Jacket > 0)) {
             $checkoutOutput['Discounts'] = [];
             //check for shoes offer
             if ($request->Shoes > 0) {
                 $shoesOffer = $this->shoesOffer($request, $catalogItems);
-                array_push($checkoutOutput['Discounts'], ['10% off shoes' => '-' . priceForBillType($request->billType, $shoesOffer)]);
+                array_push($checkoutOutput['Discounts'], ['10% off shoes' => '-' . priceForBillType($request->billCurrency, $shoesOffer)]);
                 $total -= $shoesOffer;
             }
 
             //check for 2 t-shirts and jacket offer
             if ($request['T-shirt'] > 1 && $request->Jacket > 0) {
                 $jacketOffer = $this->tShirtJacketOffer($catalogItems);
-                array_push($checkoutOutput['Discounts'], ['50% off jacket' => '-' . priceForBillType($request->billType, $jacketOffer)]);
+                array_push($checkoutOutput['Discounts'], ['50% off jacket' => '-' . priceForBillType($request->billCurrency, $jacketOffer)]);
                 $total -= $jacketOffer;
             }
         }
-        $checkoutOutput['Total'] = priceForBillType($request->billType, $total);
+        $checkoutOutput['Total'] = priceForBillType($request->billCurrency, $total);
 
         return $checkoutOutput;
 
@@ -81,7 +82,7 @@ class OrderRepository implements OrderRepositoryInterface
             'Pants' => 'required|numeric|gte:0',
             'Jacket' => 'required|numeric|gte:0',
             'Shoes' => 'required|numeric|gte:0',
-            'billType' => 'required|in:USD,EGP',
+            'billCurrency' => 'required|in:USD,EGP',
         ]);
     }
 

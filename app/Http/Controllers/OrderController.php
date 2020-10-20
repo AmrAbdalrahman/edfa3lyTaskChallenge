@@ -23,8 +23,8 @@ class OrderController extends Controller
             return $validation;
         }
 
-        $checkoutItem = $this->orderRepository->userCheckout($request);
-        return $this->apiResponse($checkoutItem);
+        $checkout = $this->orderRepository->userCheckout($request);
+        return $this->apiResponse(collect($checkout));
     }
 
 

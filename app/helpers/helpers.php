@@ -11,9 +11,9 @@ function decodeCatalogJsonFile()
     return json_decode($jsonRequest);
 }
 
-function priceForBillType($type, $value)
+function priceForBillType($currency, $value)
 {
-    if ($type == 'USD') {
+    if ($currency == 'USD') {
         return '$' . $value;
     } //assume that 1 usd = 16 EGP in real project get the actual daily value from bank through integration
     else return (int)($value * 16) . ' e£';
