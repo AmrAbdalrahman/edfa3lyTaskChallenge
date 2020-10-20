@@ -18,8 +18,8 @@ class OrderRepository implements OrderRepositoryInterface
         $subtotal = $this->calculateSubTotal($request, $catalogItems);
         $taxes = round($subtotal * (14 / 100), 2);
 
-        $checkoutOutput['Subtotal'] = priceForBillType($request->billCurrency, $subtotal);
-        $checkoutOutput['Taxes'] = priceForBillType($request->billCurrency, $taxes);
+        $checkoutOutput['Subtotal'] = priceForBillCurrency($request->billCurrency, $subtotal);
+        $checkoutOutput['Taxes'] = priceForBillCurrency($request->billCurrency, $taxes);
 
         // the original total before discount if exists
         $total = $subtotal;
@@ -30,18 +30,18 @@ class OrderRepository implements OrderRepositoryInterface
             //check for shoes offer
             if ($request->Shoes > 0) {
                 $shoesOffer = $this->shoesOffer($request, $catalogItems);
-                array_push($checkoutOutput['Discounts'], ['10% off shoes' => '-' . priceForBillType($request->billCurrency, $shoesOffer)]);
+                array_push($checkoutOutput['Discounts'], ['10% off shoes' => '-' . priceForBillCurrency($request->billCurrency, $shoesOffer)]);
                 $total -= $shoesOffer;
             }
 
             //check for 2 t-shirts and jacket offer
             if ($request['T-shirt'] > 1 && $request->Jacket > 0) {
                 $jacketOffer = $this->tShirtJacketOffer($catalogItems);
-                array_push($checkoutOutput['Discounts'], ['50% off jacket' => '-' . priceForBillType($request->billCurrency, $jacketOffer)]);
+                array_push($checkoutOutput['Discounts'], ['50% off jacket' => '-' . priceForBillCurrency($request->billCurrency, $jacketOffer)]);
                 $total -= $jacketOffer;
             }
         }
-        $checkoutOutput['Total'] = priceForBillType($request->billCurrency, $total);
+        $checkoutOutput['Total'] = priceForBillCurrency($request->billCurrency, $total);
 
         return $checkoutOutput;
 
