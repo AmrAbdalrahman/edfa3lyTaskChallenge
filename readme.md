@@ -1,21 +1,27 @@
-# Lumen PHP Framework
+This task was build using [lumen](https://lumen.laravel.com/docs/5.8) 5.8 (laravel micro framework)
+# Steps to run The project
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://poser.pugx.org/laravel/lumen-framework/d/total.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/lumen-framework/v/stable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/lumen-framework/v/unstable.svg)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://packagist.org/packages/laravel/lumen-framework)
+- git clone of the master branch
+- run composer install
+- renaming .env.example to .env which contains json catalog file path at key(Catalog_FILE_PATH)
+- run composer dump-autoload
+- run php -S localhost:8000
+- you can find json file at \storage\json\catalog.json.
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+# Endpoints
 
-## Official Documentation
+- user checkout (http://localhost:8000/api/order/checkout)
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+# Testing
 
-## Security Vulnerabilities
+- for windows run vendor\bin\phpunit
+- for mac run vendor/bin/phpunit
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+# Notes
+- for API [documentation](https://documenter.getpostman.com/view/5140236/TVYAi2b8) that contains examples for success and failures endpoints
+- I assume that 1$ equal 16 EGP at this time
 
-## License
+
+# License
 
 The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
