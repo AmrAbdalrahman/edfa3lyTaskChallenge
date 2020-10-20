@@ -18,7 +18,13 @@ class OrderController extends Controller
 
     public function checkout(Request $request)
     {
+        $validation = $this->orderRepository->userCheckoutValidation($request);
+        if ($validation) {
+            return $validation;
+        }
 
+        $checkoutItem = $this->orderRepository->userCheckout($request);
+        return $this->apiResponse($checkoutItem);
     }
 
 

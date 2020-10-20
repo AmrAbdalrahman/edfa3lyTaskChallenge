@@ -10,16 +10,21 @@ class OrderRepository implements OrderRepositoryInterface
 {
     use ApiResponseTrait;
 
-   public function userCheckout(Request $request)
-   {
-       // TODO: Implement userCheckout() method.
-   }
+    public function userCheckout(Request $request)
+    {
+        // TODO: Implement userCheckout() method.
+    }
 
     #validation part
-   public function userCheckoutValidation(Request $request)
-   {
-       // TODO: Implement userCheckoutValidation() method.
-   }
-
+    public function userCheckoutValidation(Request $request)
+    {
+        return $this->apiValidation($request, [
+            'T-shirt' => 'required|numeric|gte:0',
+            'Pants' => 'required|numeric|gte:0',
+            'Jacket' => 'required|numeric|gte:0',
+            'Shoes' => 'required|numeric|gte:0',
+            'billType' => 'required|in:USD,EGP',
+        ]);
+    }
 
 }
